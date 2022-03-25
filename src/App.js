@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import Board from './components/Board/Board'
+import { ScoreBoard } from './components/ScoreBoard/ScoreBoard'
+import { Restart } from './components/Restart/Restart'
 
 function App() {
-  const winningCondition = [
+  const winningCombination = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -15,6 +17,7 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null))
   const [xPlaying, setXPlaying] = useState(true)
   const [scores, setScores] = useState({ Player1: 0, Player2: 0 })
+  const [gameOver, setGameOver] = useState(false)
 
   const handleCell = (cellIndex) => {
     const updateBoard = board.map((value, index) => {
@@ -39,29 +42,34 @@ function App() {
       }
     }
 
-    console.log(scores)
-
     setBoard(updateBoard)
     setXPlaying(!xPlaying)
   }
 
   const checkWinner = (board) => {
-    for (let i = 0; i < winningCondition.length; i++) {
-      const [choice1, choice2, choice3] = winningCondition[i]
+    for (let i = 0; i < winningCombination.length; i++) {
+      const [choice1, choice2, choice3] = winningCombination[i]
       if (
         board[choice1] &&
         board[choice1] === board[choice2] &&
         board[choice2] === board[choice3]
       ) {
-        console.log(board[choice1])
+        setGameOver(true)
         return board[choice1]
       }
     }
   }
 
+  const resetBoard = () => {
+    setGameOver(false)
+    setBoard(Array(9).fill(null))
+  }
+
   return (
     <div>
-      <Board board={board} onClick={handleCell} />
+      <ScoreBoard scores={scores} xPlaying={xPlaying} />
+      <Board board={board} onClick={gameOver ? resetBoard : handleCell} />
+      <Restart resetBoard={resetBoard} />
     </div>
   )
 }

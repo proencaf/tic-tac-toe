@@ -1,0 +1,14 @@
+.restart {
+  border: none;
+  border-radius: 6px;
+  background-color: #e03749;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.15em;
+  padding: 0.5rem 1rem;
+  margin: 2rem auto;
+  display: block;
+  text-transform: uppercase;
+  font-family: 'Fredoka', sans-serif;
+  cursor: pointer;
+}
